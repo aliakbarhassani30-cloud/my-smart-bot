@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8" />
+        <title>پنل مدیریت هوشمند جبرئیل</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background-color: #f4f6f9;
+                font-family: Tahoma, Arial, sans-serif;
+            }
+            .card {
+                border: none;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid my-4">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <div class="card p-3">
+                        <h6>کل سفرها</h6>
+                        <span class="fw-bold fs-4">۰</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card p-3">
+                        <h6>رانندگان فعال</h6>
+                        <span class="fw-bold fs-4">۰</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card p-3">
+                        <h6>رزرو در انتظار</h6>
+                        <span class="fw-bold fs-4">۰</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card p-3">
+                        <h6>رزرو تاییدشده</h6>
+                        <span class="fw-bold fs-4">۰</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // اتصال مستقیم به پورت 8000
+                const API_URL =
+                    "https://" + window.location.hostname + ":8000/api/stats";
+
+                fetch(API_URL)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log("داده دریافتی:", data);
+                        const spans = document.querySelectorAll("span.fw-bold");
+                        if (spans.length >= 4) {
+                            spans[0].innerText = data.totalTrips || 0;
+                            spans[1].innerText = data.activeDrivers || 0;
+                            spans[2].innerText = data.pendingReservations || 0;
+                            spans[3].innerText =
+                                data.confirmedReservations || 0;
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("خطا در اتصال به پورت 8000:", err);
+                    });
+            });
+        </script>
+    </body>
+</html>

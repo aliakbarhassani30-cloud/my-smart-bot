@@ -1,0 +1,3 @@
+const { makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys');const pino = require('pino');
+async function startBot() {    const { state, saveCreds } = await useMultiFileAuthState('auth');    const sock = makeWASocket({        logger: pino({ level: 'silent' }),        auth: state,        printQRInTerminal: true // این دستور کد QR را در ترمینال نمایش می‌دهد    });
+sock.ev.on('creds.update', saveCreds);    sock.ev.on('connection.update', (update) => {        const { connection } = update;        if (connection === 'open') console.log(' اتصال با موفقیت برقرار شد!');    });}startBot();

@@ -1,0 +1,23 @@
+{
+  "name": "jabra-bot-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "pnpm -r run typecheck",
+    "build": "pnpm run typecheck && pnpm -r run build"
+  },
+  "packageManager": "pnpm@10.26.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc13",
+    "express": "^5.2.1",
+    "pino": "^10.3.1",
+    "qrcode-terminal": "^0.12.0",
+    "sqlite3": "^6.0.1"
+  }
+}
